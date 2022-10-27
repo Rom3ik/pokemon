@@ -1,0 +1,63 @@
+.pokemon-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  width: 104px;
+  height: 112px;
+  background: #FFFFFF;
+  border: 1px solid;
+  border-radius: 10px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  align-items: center;
+  justify-content: flex-start;
+
+  img {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+.ion-row {
+  gap: 10px;
+}
+
+.footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 24px;
+  color: white;
+  border-radius: 0 0 8px 8px;
+}
+
+.image-wrapper {
+  height: 86px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+small {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+}
+
+.searchbar {
+  padding: 0;
+}
+
+.searchbar {
+  --background: #ffffff;
+}

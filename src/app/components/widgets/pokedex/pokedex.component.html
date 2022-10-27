@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-searchbar
+    class="searchbar"
+    inputmode="search"
+    animated="true"
+    placeholder="Search pokemons">
+  </ion-searchbar>
+  <ion-list *ngIf="pokemon$ | async as pokemonList">
+    <ion-grid>
+      <ion-row class="ion-row ion-justify-content-center">
+        <ion-col
+          [ngStyle]="{'border-color' : 'var(--'+ pokemon?.color +')'}" class="pokemon-container"
+          *ngFor="let pokemon of pokemonList">
+          <small
+            [ngStyle]="{'color' : 'var(--'+ pokemon?.color +')'}">
+            #{{pokemon?.order | number}}
+          </small>
+          <div class="image-wrapper">
+            <img
+              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{pokemon.id}}.png"/>
+          </div>
+          <div class="footer"
+               [ngStyle]="{'background' : 'var(--'+ pokemon?.color +')'}">
+            <ion-label>{{pokemon.name | titlecase}}</ion-label>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>
