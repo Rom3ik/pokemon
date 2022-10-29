@@ -4,6 +4,6 @@ export const environment = {
   production: true,
   endpoints: {
     pokemonList: 'pokemon/',
-    pokemon: 'pokemon/:name',
+    pokemon: 'pokemon/:nameOrId',
   }
 };

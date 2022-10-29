@@ -9,25 +9,28 @@ import {map} from 'rxjs/operators';
 })
 export class PokemonService {
 
+  baseSpriteUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/';
+
   constructor(private httpClient: HttpClient) {
   }
 
-  getPokemonList(): Observable<any> {
-    return this.httpClient.get(BASE_URL + environment.endpoints.pokemonList);
+  getPokemonList(limit?: number, offset?: number): Observable<any> {
+    return this.httpClient.get(BASE_URL + environment.endpoints.pokemonList + `?limit=${limit}` + `&offset=${offset}`);
   }
 
-  getPokemon(name: string): Observable<any> {
-    return this.httpClient.get(BASE_URL + environment.endpoints.pokemon.replace(':name', name));
+  searchPokemon(nameOrId: string): Observable<any> {
+    return this.httpClient.get(BASE_URL + environment.endpoints.pokemon.replace(':nameOrId', nameOrId));
   }
 
+  getPokemonImage(id: number) {
+    return this.baseSpriteUrl + id + '.png';
+  }
 
   getPokeId(poke): number {
     return poke.url.split('/')[6];
   }
 
   getPoke(id) {
-    return this.httpClient.get(`${BASE_URL + environment.endpoints.pokemonList}${id}`).pipe(
-      map(poke => poke)
-    );
+    return this.httpClient.get(`${BASE_URL + environment.endpoints.pokemonList}${id}`);
   }
 }

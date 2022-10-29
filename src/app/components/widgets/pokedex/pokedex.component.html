@@ -1,23 +1,24 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-searchbar
+    [formControl]="searchControl"
     class="searchbar"
     inputmode="search"
     animated="true"
+    mode="ios"
     placeholder="Search pokemons">
   </ion-searchbar>
-  <ion-list *ngIf="pokemon$ | async as pokemonList">
+  <ion-list>
     <ion-grid>
       <ion-row class="ion-row ion-justify-content-center">
         <ion-col
           [ngStyle]="{'border-color' : 'var(--'+ pokemon?.color +')'}" class="pokemon-container"
-          *ngFor="let pokemon of pokemonList">
+          *ngFor="let pokemon of pokemons; trackBy: trackById">
           <small
             [ngStyle]="{'color' : 'var(--'+ pokemon?.color +')'}">
             #{{pokemon?.order | number}}
           </small>
           <div class="image-wrapper">
-            <img
-              src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{{pokemon.id}}.png"/>
+            <img [src]="pokemon.image" [alt]="pokemon.name"/>
           </div>
           <div class="footer"
                [ngStyle]="{'background' : 'var(--'+ pokemon?.color +')'}">
@@ -27,4 +28,8 @@
       </ion-row>
     </ion-grid>
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="getPokemonList(true, $event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
