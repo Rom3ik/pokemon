@@ -7,8 +7,8 @@
     mode="ios"
     placeholder="Search pokemons">
   </ion-searchbar>
-  <ion-list>
-    <ion-grid>
+  <ion-list *ngIf="!isLoading else spinner">
+    <ion-grid *ngIf="pokemons.length else noPokemons">
       <ion-row class="ion-row ion-justify-content-center">
         <ion-col
           [ngStyle]="{'border-color' : 'var(--'+ pokemon?.color +')'}" class="pokemon-container"
@@ -33,3 +33,11 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
+
+<ng-template #spinner>
+  <ion-spinner class="spin" name="lines-sharp"></ion-spinner>
+</ng-template>
+
+<ng-template #noPokemons>
+  Nothing found...
+</ng-template>

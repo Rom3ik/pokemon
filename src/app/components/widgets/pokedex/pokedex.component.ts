@@ -28,6 +28,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
   pokemons: any[] = [];
   offset = 0;
   subs = new SubSink();
+  isLoading = false;
 
   constructor(
     private pokemonService: PokemonService,
@@ -82,20 +83,25 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
   searchPokemon() {
     this.searchControl.valueChanges
       .pipe(
+        tap(() => this.isLoading = true),
         map(q => q),
-        debounceTime(500),
+        debounceTime(1000),
         distinctUntilChanged(),
         switchMap((q: any) => this.pokemonService.searchPokemon(q)
           .pipe(
             map(pokemon => ({
               ...pokemon, color: pokemon.types[0].type.name,
               image: this.pokemonService.getPokemonImage(pokemon.id)
-            }))
+            })),
+            finalize(() => this.isLoading = false)
           )),
         finalize(() => {
           this.searchPokemon();
         }),
-        catchError(err => throwError(err))
+        catchError(err => {
+          this.pokemons = [];
+          return err;
+        })
       ).subscribe(res => {
       this.pokemons = [res];
     });
