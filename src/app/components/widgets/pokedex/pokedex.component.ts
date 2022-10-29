@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PokemonService} from '../../../core/services/pokemon.service';
-import {combineLatest, Observable, throwError} from 'rxjs';
+import {combineLatest, Observable, of, throwError} from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -81,30 +81,30 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   searchPokemon() {
-    this.searchControl.valueChanges
-      .pipe(
-        tap(() => this.isLoading = true),
-        map(q => q),
-        debounceTime(1000),
-        distinctUntilChanged(),
-        switchMap((q: any) => this.pokemonService.searchPokemon(q)
-          .pipe(
-            map(pokemon => ({
-              ...pokemon, color: pokemon.types[0].type.name,
-              image: this.pokemonService.getPokemonImage(pokemon.id)
-            })),
-            finalize(() => this.isLoading = false)
-          )),
-        finalize(() => {
-          this.searchPokemon();
-        }),
-        catchError(err => {
-          this.pokemons = [];
-          return err;
-        })
-      ).subscribe(res => {
-      this.pokemons = [res];
-    });
+    this.subs.add(
+      this.searchControl.valueChanges
+        .pipe(
+          tap(() => this.isLoading = true),
+          map(q => q),
+          debounceTime(1000),
+          distinctUntilChanged(),
+          switchMap((q: any) => this.pokemonService.searchPokemon(q)
+            .pipe(
+              map(pokemon => ({
+                ...pokemon, color: pokemon.types[0].type.name,
+                image: this.pokemonService.getPokemonImage(pokemon.id)
+              })),
+              finalize(() => {
+                this.isLoading = false;
+                if (q === '') {
+                  this.getPokemonList();
+                }
+              }),
+              catchError(err => this.pokemons = [])
+            )),
+        ).subscribe(res => {
+        this.pokemons = [res];
+      }));
   }
 
   ngOnDestroy() {
