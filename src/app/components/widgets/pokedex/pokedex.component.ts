@@ -1,12 +1,12 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {PokemonService} from '../../../core/services/pokemon.service';
-import {combineLatest, Observable, of, throwError} from 'rxjs';
+import {combineLatest, EMPTY, Observable, of, throwError} from 'rxjs';
 import {
   catchError,
   debounceTime,
-  distinctUntilChanged, finalize,
+  distinctUntilChanged, filter, finalize,
   map,
-  mergeMap,
+  mergeMap, startWith,
   switchMap,
   tap
 } from 'rxjs/operators';
@@ -62,21 +62,23 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
             color: poke.types[0].type.name,
             image: this.pokemonService.getPokemonImage(poke.id)
           }))),
-          tap((data) => {
-            if (this.offset > 0) {
-              this.pokemons = [...this.pokemons, ...data];
-            } else {
-              this.pokemons = data;
-            }
-          }),
-        ).subscribe()
+          catchError(err => {
+            this.pokemons = [];
+            return of(null);
+          })
+        ).subscribe(data => {
+          this.isLoading = false;
+        if (this.offset > 0) {
+          this.pokemons = [...this.pokemons, ...data];
+        }
+        if (event) {
+          event.target.complete();
+        } else {
+          this.pokemons = data;
+        }
+      })
     );
-    if (event) {
-      event.target.complete();
-    }
-    if (this.offset >= 1154) {
-      this.infinity.disabled = true;
-    }
+
   }
 
 
@@ -85,26 +87,34 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
       this.searchControl.valueChanges
         .pipe(
           tap(() => this.isLoading = true),
-          map(q => q),
-          debounceTime(1000),
+          map(q => q.toLowerCase()),
+          debounceTime(600),
           distinctUntilChanged(),
+          filter(q => {
+            if (q !== '') {
+              return q;
+            } else {
+              this.offset = 0;
+              this.getPokemonList();
+            }
+          }),
           switchMap((q: any) => this.pokemonService.searchPokemon(q)
             .pipe(
               map(pokemon => ({
                 ...pokemon, color: pokemon.types[0].type.name,
                 image: this.pokemonService.getPokemonImage(pokemon.id)
               })),
-              finalize(() => {
+              catchError(err => {
                 this.isLoading = false;
-                if (q === '') {
-                  this.getPokemonList();
-                }
-              }),
-              catchError(err => this.pokemons = [])
-            )),
+                return this.pokemons = [];
+              })
+            )),finalize(() => this.isLoading = false)
         ).subscribe(res => {
         this.pokemons = [res];
-      }));
+        this.isLoading = false;
+      })
+    )
+    ;
   }
 
   ngOnDestroy() {
