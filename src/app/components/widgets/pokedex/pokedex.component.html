@@ -1,34 +1,40 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="ios"></ion-toolbar>
+  <ion-toolbar mode="ios">
+    <ion-searchbar
+      [formControl]="searchControl"
+      class="searchbar"
+      inputmode="search"
+      mode="ios"
+      placeholder="Search pokemons">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content [fullscreen]="true" class="ion-padding">
-  <ion-searchbar
-    [formControl]="searchControl"
-    class="searchbar"
-    inputmode="search"
-    animated="true"
-    mode="ios"
-    placeholder="Search pokemons">
-  </ion-searchbar>
   <ion-list *ngIf="!isLoading else spinner">
     <ion-grid *ngIf="pokemons.length else noPokemons">
       <ion-row class="ion-row ion-justify-content-center">
         <ion-col
-          [ngStyle]="{'border-color' : 'var(--'+ pokemon?.color +')'}" class="pokemon-container"
+          (click)="showPokemonDetails(pokemon)"
+          [ngStyle]="{'border-color' : 'var(--'+ pokemon?.type +')'}" class="pokemon-container"
           *ngFor="let pokemon of pokemons; trackBy: trackById">
           <small
-            [ngStyle]="{'color' : 'var(--'+ pokemon?.color +')'}">
+            [ngStyle]="{'color' : 'var(--'+ pokemon?.type +')'}">
             #{{pokemon?.order | number}}
           </small>
           <div class="image-wrapper">
             <img [src]="pokemon.image" [alt]="pokemon.name"/>
           </div>
           <div class="footer"
-               [ngStyle]="{'background' : 'var(--'+ pokemon?.color +')'}">
+               [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">
             <ion-label>{{pokemon.name | titlecase}}</ion-label>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-list>
-  <ion-infinite-scroll (ionInfinite)="getPokemonList(true, $event)">
+  <ion-infinite-scroll (ionInfinite)="loadPokemons(true, $event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more pokemons...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

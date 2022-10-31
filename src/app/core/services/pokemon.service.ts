@@ -30,6 +30,10 @@ export class PokemonService {
     return poke.url.split('/')[6];
   }
 
+  getPokemonType(poke): string {
+    return poke.types[0].type.name;
+  }
+
   getPoke(id) {
     return this.httpClient.get(`${BASE_URL + environment.endpoints.pokemonList}${id}`);
   }

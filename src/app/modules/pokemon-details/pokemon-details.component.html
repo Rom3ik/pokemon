@@ -1,0 +1,29 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar mode="ios" class="bg-transparent">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon color="dark" slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-left" color="light">{{pokemon?.name | titlecase}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [ngStyle]="{'--background' : 'var(--'+ pokemon?.type +')'}">
+  <ion-icon class="pokeball-icon" [src]="'assets/icon/pokeball.svg'"></ion-icon>
+  <div class="d-flex flex-column h-100">
+    <div class="top">
+    </div>
+    <div class="bottom">
+      <img [src]="pokemon?.image" [alt]="pokemon?.name"/>
+      <div class="bottom-content">
+        <div class="d-flex ion-justify-content-center" style="gap:15px">
+          <ion-badge
+            [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">{{pokemon?.types[0]?.type?.name}}</ion-badge>
+          <ion-badge
+            [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">{{pokemon?.types[1]?.type?.name}}</ion-badge>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
