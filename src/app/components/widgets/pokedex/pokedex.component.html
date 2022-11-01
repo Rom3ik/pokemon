@@ -2,6 +2,7 @@
   <ion-toolbar mode="ios"></ion-toolbar>
   <ion-toolbar mode="ios">
     <ion-searchbar
+      [debounce]="0"
       [formControl]="searchControl"
       class="searchbar"
       inputmode="search"

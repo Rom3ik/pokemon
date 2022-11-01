@@ -13,16 +13,16 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  filter,
+  filter, finalize,
   map,
   mergeMap,
-  switchMap
+  switchMap, tap
 } from 'rxjs/operators';
 import {Types} from '../../../core/enums/types';
 import {SubSink} from 'subsink';
 import {IonInfiniteScroll} from '@ionic/angular';
 import {FormControl} from '@angular/forms';
-import { Router, NavigationExtras } from '@angular/router';
+import {Router, NavigationExtras} from '@angular/router';
 
 @Component({
   selector: 'app-pokedex',
@@ -86,16 +86,15 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
           catchError(err => {
             this.pokemons = [];
             return of(null);
-          })
+          }),
+          finalize(() => this.cdr.markForCheck())
         ).subscribe(data => {
         if (this.offset > 0) {
-          this.cdr.markForCheck();
           this.pokemons = [...this.pokemons, ...data];
         }
         if (event) {
           event.target.complete();
         } else {
-          this.cdr.markForCheck();
           this.pokemons = data;
         }
       })
@@ -125,7 +124,8 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
                 ...pokemon, type: this.pokemonService.getPokemonType(pokemon),
                 image: this.pokemonService.getPokemonImage(pokemon.id)
               })),
-              catchError(err => this.pokemons = [])
+              catchError(err => this.pokemons = []),
+              finalize(() => this.cdr.markForCheck())
             )),
         ).subscribe(res => {
         this.cdr.markForCheck();
