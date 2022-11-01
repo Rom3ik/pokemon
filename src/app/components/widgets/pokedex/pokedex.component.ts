@@ -108,7 +108,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
       this.searchControl.valueChanges
         .pipe(
           map(q => q.toLowerCase()),
-          debounceTime(600),
+          debounceTime(400),
           distinctUntilChanged(),
           filter(q => {
             if (q !== '') {
