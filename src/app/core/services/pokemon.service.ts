@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {BASE_URL, environment} from '../../../environments/environment.prod';
-import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +31,10 @@ export class PokemonService {
 
   getPokemonType(poke): string {
     return poke.types[0].type.name;
+  }
+
+  getPokemonSpecies(id: string){
+    return this.httpClient.get(BASE_URL + environment.endpoints.species.replace(':id', id));
   }
 
   getPoke(id) {

@@ -24,11 +24,13 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap');
 
-*{
+* {
   font-family: 'Poppins', serif;
+  font-weight: 400;
 }
+
 ion-content {
   --background: #F7F7F7;
 }
@@ -55,4 +57,11 @@ ion-list {
 
 .w-100 {
   width: 100%;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+.gap-5 {
+  gap: 5px;
 }

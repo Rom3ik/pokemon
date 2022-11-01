@@ -1,10 +1,10 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar mode="ios">
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar mode="ios" class="bg-transparent">
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon color="dark" slot="icon-only" name="arrow-back-outline"></ion-icon>
+      <ion-button (click)="goBack()">
+        <ion-icon color="light" slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-left">{{title}}</ion-title>
+    <ion-title class="ion-text-left" color="light">{{title | titlecase}}</ion-title>
   </ion-toolbar>
 </ion-header>

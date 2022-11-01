@@ -25,7 +25,7 @@
             #{{pokemon?.order | number}}
           </small>
           <div class="image-wrapper">
-            <img [src]="pokemon.image" [alt]="pokemon.name"/>
+            <img [src]="pokemon.image" [alt]="pokemon.name" (error)="'Loading...'"/>
           </div>
           <div class="footer"
                [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">

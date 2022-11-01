@@ -1,28 +1,83 @@
-<ion-header class="ion-no-border" [translucent]="true">
-  <ion-toolbar mode="ios" class="bg-transparent">
-    <ion-buttons slot="start">
-      <ion-button (click)="goBack()">
-        <ion-icon color="dark" slot="icon-only" name="arrow-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title class="ion-text-left" color="light">{{pokemon?.name | titlecase}}</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true" [ngStyle]="{'--background' : 'var(--'+ pokemon?.type +')'}">
-  <ion-icon class="pokeball-icon" [src]="'assets/icon/pokeball.svg'"></ion-icon>
+<app-header
+  [title]="pokemon?.name"
+  [backUrl]="'/tabs'"></app-header>
+<ion-content
+  [fullscreen]="true"
+  [ngStyle]="{'--background' : 'var(--'+ pokemon?.type +')'}">
+  <ion-icon class="pokeball-icon"
+            [src]="'assets/icon/pokeball.svg'">
+  </ion-icon>
   <div class="d-flex flex-column h-100">
     <div class="top">
     </div>
     <div class="bottom">
-      <img [src]="pokemon?.image" [alt]="pokemon?.name"/>
+      <img
+        [src]="pokemon?.image"
+        [alt]="pokemon?.name"/>
       <div class="bottom-content">
         <div class="d-flex ion-justify-content-center" style="gap:15px">
           <ion-badge
-            [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">{{pokemon?.types[0]?.type?.name}}</ion-badge>
+            [ngStyle]="{'background' : 'var(--'+ pokemon?.types[0].type.name +')'}">
+            {{pokemon?.types[0]?.type?.name}}
+          </ion-badge>
           <ion-badge
-            [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">{{pokemon?.types[1]?.type?.name}}</ion-badge>
+            *ngIf="pokemon?.types.length > 1"
+            [ngStyle]="{'background' : 'var(--'+ pokemon?.types[1].type.name +')'}">
+            {{pokemon?.types[1]?.type?.name}}
+          </ion-badge>
         </div>
+        <ng-container>
+          <span class="about"
+                [ngStyle]="{'color' : 'var(--'+ pokemon?.types[0].type.name +')'}">
+            About
+          </span>
+        </ng-container>
+        <ng-container>
+          <div class="d-flex ion-justify-content-center gap-10 middle">
+            <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
+              <span class="d-flex ion-align-items-center pokemon-detail-value gap-5">
+                <ion-icon src="assets/icon/weight.svg"></ion-icon>
+                {{pokemon?.weight}} kg
+              </span>
+              <small>Weight</small>
+            </div>
+            <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
+               <span class="d-flex ion-align-items-center pokemon-detail-value gap-5">
+                <ion-icon src="assets/icon/height.svg"></ion-icon>
+                 {{pokemon?.height}} m
+               </span>
+              <small>Height</small>
+            </div>
+            <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
+                 <span class="d-flex ion-align-items-center ion-text-center pokemon-detail-value gap-5">
+                 {{pokemon?.moves[0].move.name | titlecase}},{{pokemon?.moves[1].move.name | titlecase}}
+               </span>
+              <small>Moves</small>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container>
+          <div>
+            <p *ngIf="(pokemonDescription$ | async) as description else descriptionLoading" class="description"
+               [innerHTML]="description"></p>
+            <ng-template #descriptionLoading>
+              <ion-label>
+                <p>
+                  <ion-skeleton-text [animated]="true" style="width: 90%;"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text [animated]="true" style="width: 85%;"></ion-skeleton-text>
+                </p>
+                <p>
+                  <ion-skeleton-text [animated]="true" style="width: 70%;"></ion-skeleton-text>
+                </p>
+              </ion-label>
+            </ng-template>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>

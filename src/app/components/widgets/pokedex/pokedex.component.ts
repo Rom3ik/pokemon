@@ -116,6 +116,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
             } else {
               this.offset = 0;
               this.loadPokemons();
+              return;
             }
           }),
           switchMap((q: any) => this.pokemonService.searchPokemon(q)

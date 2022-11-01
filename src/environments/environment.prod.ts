@@ -5,5 +5,6 @@ export const environment = {
   endpoints: {
     pokemonList: 'pokemon/',
     pokemon: 'pokemon/:nameOrId',
+    species: 'pokemon-species/:id'
   }
 };
