@@ -128,7 +128,6 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
               finalize(() => this.cdr.markForCheck())
             )),
         ).subscribe(res => {
-        this.cdr.markForCheck();
         this.pokemons = [res];
       })
     );
