@@ -39,7 +39,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
   pokemons: any[] = [];
   offset = 0;
   subs = new SubSink();
-  isLoading = false;
+  isLoading = this.loadingService.loading$;
 
   constructor(
     private pokemonService: PokemonService,
@@ -51,11 +51,11 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.loadPokemons();
-    this.searchPokemon();
   }
 
 
   ngAfterViewInit() {
+    this.searchPokemon();
   }
 
   trackById(pokemon: any) {
@@ -73,10 +73,10 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loadPokemons(loadMore: boolean = false, event?: any) {
     if (loadMore) {
-      this.offset += 21;
+      this.offset += 24;
     }
     this.subs.add(
-      this.pokemonService.getPokemonList(21, this.offset)
+      this.pokemonService.getPokemonList(24, this.offset)
         .pipe(
           map(res => res.results.map(poke => ({id: this.pokemonService.getPokeId(poke)}))),
           mergeMap(pokemon => combineLatest(pokemon.map(poke => poke = this.pokemonService.getPoke(poke.id)))),
@@ -85,19 +85,12 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
             type: this.pokemonService.getPokemonType(poke),
             image: this.pokemonService.getPokemonImage(poke.id)
           }))),
-          catchError(err => {
-            this.pokemons = [];
-            return of(null);
-          }),
+          catchError(err => this.pokemons = []),
           finalize(() => this.cdr.markForCheck())
         ).subscribe(data => {
-        if (this.offset > 0) {
-          this.pokemons = [...this.pokemons, ...data];
-        }
+        this.pokemons = [...this.pokemons, ...data];
         if (event) {
           event.target.complete();
-        } else {
-          this.pokemons = data;
         }
       })
     );
@@ -107,7 +100,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   searchPokemon() {
     this.subs.add(
-    this.searchControl.valueChanges
+      this.searchControl.valueChanges
         .pipe(
           map(q => q.toLowerCase()),
           debounceTime(400),
@@ -122,6 +115,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
               return;
             }
           }),
+          tap(() => this.loadingService.show()),
           switchMap((q: any) => this.pokemonService.searchPokemon(q)
             .pipe(
               map(pokemon => ({
@@ -129,7 +123,10 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
                 image: this.pokemonService.getPokemonImage(pokemon.id)
               })),
               catchError(err => this.pokemons = []),
-              finalize(() => this.cdr.markForCheck())
+              finalize(() => {
+                this.loadingService.hide();
+                this.cdr.markForCheck();
+              })
             )),
         ).subscribe(res => {
         this.pokemons = [res];

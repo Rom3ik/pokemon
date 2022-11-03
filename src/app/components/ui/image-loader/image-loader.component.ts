@@ -4,7 +4,6 @@ import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
   selector: 'app-image-with-loader',
   templateUrl: './image-loader.component.html',
   styleUrls: ['./image-loader.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageLoaderComponent {
 
