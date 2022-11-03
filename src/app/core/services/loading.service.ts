@@ -5,6 +5,7 @@ import {Injectable} from '@angular/core';
   providedIn: 'root',
 })
 export class LoadingService {
+
   loading = new BehaviorSubject<boolean>(false);
   loading$ = this.loading.asObservable();
 
@@ -12,11 +13,12 @@ export class LoadingService {
   constructor() {
   }
 
-  show() {
+  show(): void {
     this.loading.next(true);
   }
 
-  hide() {
+  hide(): void {
     this.loading.next(false);
   }
+
 }

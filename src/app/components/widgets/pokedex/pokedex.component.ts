@@ -23,6 +23,7 @@ import {SubSink} from 'subsink';
 import {IonInfiniteScroll} from '@ionic/angular';
 import {FormControl} from '@angular/forms';
 import {Router, NavigationExtras} from '@angular/router';
+import {LoadingService} from "../../../core/services/loading.service";
 
 @Component({
   selector: 'app-pokedex',
@@ -43,7 +44,8 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private loadingService: LoadingService
   ) {
   }
 
