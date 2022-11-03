@@ -1,9 +1,10 @@
-import {Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-image-with-loader',
   templateUrl: './image-loader.component.html',
-  styleUrls: ['./image-loader.component.scss']
+  styleUrls: ['./image-loader.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageLoaderComponent {
 
