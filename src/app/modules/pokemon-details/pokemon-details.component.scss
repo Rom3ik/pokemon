@@ -103,3 +103,52 @@ small {
   text-align: justify;
   color: #212121;
 }
+
+.stats {
+  display: flex;
+  gap: 5px;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-right: 15px;
+  border-right: 1px solid #E0E0E0;
+
+  span {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    align-items: center;
+    text-align: right;
+  }
+}
+
+.stats-value {
+  padding-left: 10px;
+  ion-text {
+    position: relative;
+  }
+}
+
+.stat-value {
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 0;
+  transition: 1s ease width;
+
+}
+
+.progress {
+  background-color: #d8d8d8;
+  border-radius: 20px;
+  height: 5px;
+  position: absolute;
+  left: 40px;
+  right: 0;
+}

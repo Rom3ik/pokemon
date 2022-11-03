@@ -20,6 +20,7 @@
       <div class="bottom-content">
         <div class="d-flex ion-justify-content-center" style="gap:15px">
           <ion-badge
+            *ngIf="pokemon?.types.length"
             [ngStyle]="{'background' : 'var(--'+ pokemon?.types[0].type.name +')'}">
             {{pokemon?.types[0]?.type?.name}}
           </ion-badge>
@@ -34,30 +35,30 @@
                 [ngStyle]="{'color' : 'var(--'+ pokemon?.types[0].type.name +')'}">
             About
           </span>
-        </ng-container>
-        <ng-container>
-          <div class="d-flex ion-justify-content-center gap-10 middle">
-            <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
+          <ng-container>
+            <div class="d-flex ion-justify-content-center gap-10 middle">
+              <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
               <span class="d-flex ion-align-items-center pokemon-detail-value gap-5">
                 <ion-icon src="assets/icon/weight.svg"></ion-icon>
                 {{pokemon?.weight}} kg
               </span>
-              <small>Weight</small>
-            </div>
-            <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
+                <small>Weight</small>
+              </div>
+              <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
                <span class="d-flex ion-align-items-center pokemon-detail-value gap-5">
                 <ion-icon src="assets/icon/height.svg"></ion-icon>
                  {{pokemon?.height}} m
                </span>
-              <small>Height</small>
-            </div>
-            <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
+                <small>Height</small>
+              </div>
+              <div class="d-flex flex-column ion-align-items-center w-100 gap-10">
                  <span class="d-flex ion-align-items-center ion-text-center pokemon-detail-value gap-5">
                  {{pokemon?.moves[0].move.name | titlecase}},{{pokemon?.moves[1].move.name | titlecase}}
                </span>
-              <small>Moves</small>
+                <small>Moves</small>
+              </div>
             </div>
-          </div>
+          </ng-container>
         </ng-container>
         <ng-container>
           <div>
@@ -77,8 +78,41 @@
                 <p>
                   <ion-skeleton-text [animated]="true" style="width: 70%;"></ion-skeleton-text>
                 </p>
+                <p>
+                  <ion-skeleton-text [animated]="true" style="width: 70%;"></ion-skeleton-text>
+                </p>
               </ion-label>
             </ng-template>
+          </div>
+        </ng-container>
+        <ng-container>
+          <span class="about"
+                [ngStyle]="{'color' : 'var(--'+ pokemon?.types[0].type.name +')'}">
+            Base Stats
+          </span>
+          <div class="stats ion-align-items-center">
+            <div class="left" [ngStyle]="{'color' : 'var(--'+ pokemon?.types[0].type.name +')'}">
+              <span>HP</span>
+              <span>ATK</span>
+              <span>DEF</span>
+              <span>SATK</span>
+              <span>SDEF</span>
+              <span>SPD</span>
+            </div>
+            <div class="stats-value flex-column d-flex w-100">
+              <div *ngFor="let stat of pokemonStats">
+                <ion-text class="gap-25 d-flex ion-align-items-center">{{stat?.value}}
+                  <div class="progress">
+                    <div
+                      [ngStyle]="{'background' : 'var(--'+ pokemon?.types[0].type.name +')'}"
+                      class="stat-value"
+                      [attr.max]="350"
+                      [attr.done]="stat?.value">
+                    </div>
+                  </div>
+                </ion-text>
+              </div>
+            </div>
           </div>
         </ng-container>
       </div>
