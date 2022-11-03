@@ -73,7 +73,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loadPokemons(loadMore: boolean = false, event?: any) {
     if (loadMore) {
-      this.offset += 24;
+      this.offset += 25;
     }
     this.subs.add(
       this.pokemonService.getPokemonList(24, this.offset)

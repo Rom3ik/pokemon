@@ -14,12 +14,10 @@ export class LoadingService {
   }
 
   show(): void {
-    debugger
     this.loading.next(true);
   }
 
   hide(): void {
-    debugger
     this.loading.next(false);
   }
 
