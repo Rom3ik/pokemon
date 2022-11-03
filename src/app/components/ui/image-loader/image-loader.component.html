@@ -1,6 +1,6 @@
 <div class="container">
   <div *ngIf="isLoading">
-    <ion-spinner></ion-spinner>
+    <ion-spinner name="lines-sharp"></ion-spinner>
   </div>
   <img [style.height]="height" [style.width]="width" [src]=image [ngStyle]="{visibility:isLoading?'hidden':''}"
        (load)="hideLoader()" (error)="hideLoader()" [alt]="alt"/>
