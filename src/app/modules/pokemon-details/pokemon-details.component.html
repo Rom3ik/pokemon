@@ -11,9 +11,12 @@
     <div class="top">
     </div>
     <div class="bottom">
-      <img
-        [src]="pokemon?.image"
-        [alt]="pokemon?.name"/>
+      <app-image-with-loader
+        [image]="pokemon?.image"
+        [alt]="pokemon?.name"
+        [height]="'100'"
+        [width]="'192'"
+      ></app-image-with-loader>
       <div class="bottom-content">
         <div class="d-flex ion-justify-content-center" style="gap:15px">
           <ion-badge

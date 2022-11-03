@@ -1,3 +1,7 @@
+ion-content {
+  --offset-bottom: 96px !important;
+}
+
 .pokemon-container {
   display: flex;
   flex-direction: column;
@@ -54,7 +58,8 @@ small {
 .searchbar {
   --background: #ffffff;
 }
-.spin{
+
+.spin {
   position: fixed;
   top: 50%;
   left: 50%;

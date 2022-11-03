@@ -11,6 +11,8 @@ export class ImageLoaderComponent {
   @Input() loader = 'assets/icon/loading.svg';
   @Input() image: any;
   @Input() alt: string;
+  @Input() height = `${72}px`;
+  @Input() width = `${72}px`;
 
   isLoading: boolean;
 

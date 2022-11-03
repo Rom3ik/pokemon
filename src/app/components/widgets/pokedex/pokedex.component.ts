@@ -51,11 +51,11 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.loadPokemons();
+    this.searchPokemon();
   }
 
 
   ngAfterViewInit() {
-    this.searchPokemon();
   }
 
   trackById(pokemon: any) {
@@ -107,7 +107,7 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
 
   searchPokemon() {
     this.subs.add(
-      this.searchControl.valueChanges
+    this.searchControl.valueChanges
         .pipe(
           map(q => q.toLowerCase()),
           debounceTime(400),
@@ -115,7 +115,8 @@ export class PokedexComponent implements OnInit, OnDestroy, AfterViewInit {
           filter(q => {
             if (q !== '') {
               return q;
-            } else {
+            }
+            if (q === '') {
               this.offset = 0;
               this.loadPokemons();
               return;

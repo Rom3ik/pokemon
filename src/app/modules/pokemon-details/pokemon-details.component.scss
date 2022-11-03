@@ -11,9 +11,8 @@ ion-content {
   flex: 4;
   position: relative;
 
-  img {
-    width: 12rem;
-    height: 12rem;
+  app-image-with-loader {
+
     position: absolute;
     left: 50%;
     top: 0;
