@@ -8,7 +8,7 @@ import {
   ViewChild
 } from '@angular/core';
 import {PokemonService} from '../../../core/services/pokemon.service';
-import {combineLatest, Observable, of} from 'rxjs';
+import {combineLatest, Observable} from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -23,7 +23,7 @@ import {SubSink} from 'subsink';
 import {IonInfiniteScroll} from '@ionic/angular';
 import {FormControl} from '@angular/forms';
 import {Router, NavigationExtras} from '@angular/router';
-import {LoadingService} from "../../../core/services/loading.service";
+import {LoadingService} from '../../../core/services/loading.service';
 
 @Component({
   selector: 'app-pokedex',
