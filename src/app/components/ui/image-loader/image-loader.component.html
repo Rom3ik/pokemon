@@ -2,23 +2,13 @@
   <div *ngIf="isLoading">
     <ion-spinner name="lines-sharp"></ion-spinner>
   </div>
-  <picture>
-    <source
-      [srcset]="image"
-      [style.height]="height"
-      [style.width]="width"
-      media="(max-width: 370px)"
-      [ngStyle]="{visibility:isLoading?'hidden':''}"
-      (load)="hideLoader()"
-      (error)="hideLoader()"
-      type="image/png"/>
-    <img
-      [width]="width"
-      [style.height]="height"
-      [style.width]="width"
-      [src]=image
-      [alt]="alt"
-      [ngStyle]="{visibility:isLoading?'hidden':''}"
-      (load)="hideLoader()" (error)="hideLoader()"/>
-  </picture>
+  <img
+    [width]="width"
+    [style.height]="height"
+    [style.width]="width"
+    [src]=image
+    [alt]="alt"
+    [ngStyle]="{visibility:isLoading?'hidden':''}"
+    (load)="hideLoader()"
+    (error)="hideLoader()"/>
 </div>

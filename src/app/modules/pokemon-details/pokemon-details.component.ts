@@ -1,8 +1,8 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, OnInit, Renderer2} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PokemonService} from '../../core/services/pokemon.service';
-import {map} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
+import {EMPTY, Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-details',
@@ -66,6 +66,7 @@ export class PokemonDetailsComponent implements OnInit, AfterViewInit {
       .pipe(
         map((pokemon: any) => pokemon.flavor_text_entries.filter(lang => lang.language.name === 'en')),
         map(data => data[0].flavor_text),
+        catchError(err => of('This pokemon don'+ '\'' + 't have description'))
       );
   }
 
