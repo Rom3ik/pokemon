@@ -100,7 +100,7 @@
               <span>SPD</span>
             </div>
             <div class="stats-value flex-column d-flex w-100">
-              <div *ngFor="let stat of pokemonStats">
+              <div *ngFor="let stat of pokemonStats; trackBy: trackByName">
                 <ion-text class="gap-25 d-flex ion-align-items-center">{{stat?.value}}
                   <div class="progress">
                     <div

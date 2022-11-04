@@ -36,6 +36,10 @@ export class PokemonDetailsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
   }
 
+  trackByName(index: number, stat: any) {
+    return stat.name;
+  }
+
   ngAfterViewInit() {
     setTimeout(() => {
       const progress = Array.from(document.getElementsByClassName('stat-value') as any);

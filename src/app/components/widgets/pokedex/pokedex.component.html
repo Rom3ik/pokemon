@@ -11,43 +11,6 @@
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
+<app-pokemon-list></app-pokemon-list>
 
-<ion-content [fullscreen]="true" class="ion-padding">
-  <ion-list *ngIf="(isLoading | async) === false else spinner">
-    <ion-grid *ngIf="pokemons.length else noPokemons">
-      <ion-row class="ion-row ion-justify-content-center">
-        <ion-col
-          (click)="showPokemonDetails(pokemon)"
-          [ngStyle]="{'border-color' : 'var(--'+ pokemon?.type +')'}" class="pokemon-container"
-          *ngFor="let pokemon of pokemons; trackBy: trackById">
-          <small
-            [ngStyle]="{'color' : 'var(--'+ pokemon?.type +')'}">
-            #{{pokemon?.order | number}}
-          </small>
-          <div class="image-wrapper">
-            <app-image-with-loader
-              [image]="pokemon?.image"
-              [alt]="pokemon?.name"
-            ></app-image-with-loader>
-          </div>
-          <div class="footer"
-               [ngStyle]="{'background' : 'var(--'+ pokemon?.type +')'}">
-            <ion-label>{{pokemon.name | titlecase}}</ion-label>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-list>
-  <ion-infinite-scroll (ionInfinite)="loadPokemons(true, $event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more pokemons...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
-</ion-content>
 
-<ng-template #spinner>
-  <ion-spinner class="spin" name="lines-sharp"></ion-spinner>
-</ng-template>
-
-<ng-template #noPokemons>
-  Nothing found...
-</ng-template>
