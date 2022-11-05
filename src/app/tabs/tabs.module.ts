@@ -6,6 +6,7 @@ import { TabsPageRoutingModule } from './tabs-routing.module';
 import { TabsPage } from './tabs.page';
 import {SharedModule} from '../core/shared/shared.module';
 
+
 @NgModule({
   imports: [
     IonicModule,
